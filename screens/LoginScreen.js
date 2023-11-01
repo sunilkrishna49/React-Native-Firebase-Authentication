@@ -62,6 +62,30 @@ export default function LoginScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+        <View>
+          <Text className="font-bold text-center text-xl text-gray-600 py-5">
+            Or
+          </Text>
+        </View>
+        <View className="flex-row justify-center space-x-12">
+          <TouchableOpacity className="bg-gray-100 rounded-2xl p-2">
+            <Image source={require("../assets/icons/google.png")} />
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-gray-100 p-2 rounded-2xl">
+            <Image source={require("../assets/icons/apple.png")} />
+          </TouchableOpacity>
+          <TouchableOpacity className="bg-gray-100 p-2 rounded-2xl">
+            <Image source={require("../assets/icons/facebook.png")} />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row mt-8 justify-center">
+          <Text className="text-gray-400 font-semibold">
+            Don't have an account?{" "}
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+            <Text className="font-semibold text-yellow-400">Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
