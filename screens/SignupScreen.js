@@ -6,14 +6,28 @@ import {
   Image,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { themeColors } from "../theme";
 import { ArrowLeftIcon } from "react-native-heroicons/solid";
 import { useNavigation } from "@react-navigation/native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 export default function SignupScreen() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async () => {
+    if (email && password) {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (err) {
+        console.log("Error Message: ", err.message);
+      }
+    }
+  };
   return (
     <View
       className="flex-1 bg-white"
@@ -42,27 +56,32 @@ export default function SignupScreen() {
         <View className="form space-y-2">
           <Text className="text-gray-700 ml-4">Full Name</Text>
           <TextInput
-            className="p-2 bg-gray-100 text-gray-400 rounded-2xl mb-3"
+            className="p-2 bg-gray-100 text-gray-900 rounded-2xl mb-3"
             value="john snow"
             placeholder="Enter Your Name"
           ></TextInput>
           <Text className="text-gray-700 ml-4">Email Address</Text>
           <TextInput
-            className="p-2 bg-gray-100 text-gray-400 rounded-2xl mb-3"
-            value="john@gmail.com"
+            className="p-2 bg-gray-100 text-gray-900 rounded-2xl mb-3"
+            value={email}
+            onChangeText={(value) => setEmail(value)}
             placeholder="Enter Email"
           ></TextInput>
           <Text className="ml-4 text-gray-700">Password</Text>
           <TextInput
-            className="p-2 bg-gray-100 rounded-2xl text-gray-400 mb-5"
+            className="p-2 bg-gray-100 rounded-2xl text-gray-900 mb-5"
             secureTextEntry
-            value="test12345"
+            value={password}
+            onChangeText={(value) => setPassword(value)}
             placeholder="Enter Password"
           ></TextInput>
 
-          <TouchableOpacity className="bg-yellow-400 py-3 rounded-xl">
+          <TouchableOpacity
+            className="bg-yellow-400 py-3 rounded-xl"
+            onPress={handleSubmit}
+          >
             <Text className="font-xl text-center font-bold text-gray-600">
-              Login
+              Signup
             </Text>
           </TouchableOpacity>
         </View>
